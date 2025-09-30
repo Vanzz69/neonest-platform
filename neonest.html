@@ -16,8 +16,6 @@
     html,body{height:100%}
     body{margin:0;background:linear-gradient(180deg,#fbfdff 0%,#f7fbff 100%);color:var(--text);}
     .app{max-width:var(--max-width);margin:28px auto;padding:20px;}
-
-    /* Layout */
     .topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));box-shadow:var(--card-shadow);}
     .brand{display:flex;align-items:center;gap:12px}
     .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--primary),#3db5b0);display:flex;align-items:center;justify-content:center;color:white;font-weight:700}
@@ -25,9 +23,7 @@
     .actions{display:flex;gap:10px;align-items:center}
     .btn{padding:8px 12px;border-radius:10px;border:0;cursor:pointer;background:var(--primary);color:white}
     .btn.secondary{background:transparent;color:var(--text);border:1px solid rgba(15,23,36,0.06)}
-
     .layout{display:grid;grid-template-columns:260px 1fr 320px;gap:18px;margin-top:18px}
-    /* Sidebar */
     .sidebar{background:var(--glass);padding:14px;border-radius:12px;box-shadow:var(--card-shadow);height:calc(100vh - 200px);overflow:auto}
     .profile{display:flex;align-items:center;gap:12px}
     .avatar{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#ffd28a,#ff8a65);display:flex;align-items:center;justify-content:center;font-weight:700}
@@ -35,15 +31,11 @@
     .nav button{background:transparent;border:0;padding:10px;border-radius:10px;text-align:left;cursor:pointer}
     .nav button.active{background:rgba(14,165,160,0.08)}
     .create-space{margin-top:14px;display:block;width:100%}
-
-    /* Main */
     .main{background:transparent}
     .welcome{display:flex;justify-content:space-between;gap:12px}
     .hero{flex:1;background:white;padding:16px;border-radius:12px;box-shadow:var(--card-shadow)}
     .cards{display:flex;gap:12px;margin-top:12px}
     .card{flex:1;padding:12px;border-radius:12px;background:white;box-shadow:var(--card-shadow)}
-
-    /* Community view */
     .community{display:grid;grid-template-columns:220px 1fr;gap:12px;margin-top:12px}
     .channels{background:white;padding:12px;border-radius:12px;height:520px;overflow:auto}
     .chat{background:white;padding:12px;border-radius:12px;height:520px;display:flex;flex-direction:column}
@@ -53,199 +45,29 @@
     .msg.them{background:#fbfbfb;border:1px solid rgba(15,23,36,0.04)}
     .composer{display:flex;gap:8px;margin-top:8px}
     .composer input{flex:1;padding:10px;border-radius:10px;border:1px solid rgba(15,23,36,0.06)}
-
-    /* Right sidebar */
     .rightbar{background:var(--glass);padding:14px;border-radius:12px;box-shadow:var(--card-shadow);height:calc(100vh - 200px);overflow:auto}
     .online-list{display:flex;flex-direction:column;gap:8px}
     .member{display:flex;align-items:center;gap:8px}
     .pill{padding:6px 10px;border-radius:999px;background:rgba(0,0,0,0.06);font-size:13px}
-
-    /* Co-working modal */
     .modal{position:fixed;left:0;top:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:rgba(6,8,15,0.45);}
     .modal .panel{width:900px;background:white;padding:16px;border-radius:12px;display:grid;grid-template-columns:1fr 320px;gap:12px}
     .video-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
     .cam{background:linear-gradient(180deg,#f8fafc,#eef2ff);height:180px;border-radius:10px;display:flex;align-items:center;justify-content:center}
     .pomodoro{background:#fff6ea;padding:10px;border-radius:10px}
-
-    /* Events / calendar simple */
     .calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:8px}
     .day{padding:8px;border-radius:8px;background:white;min-height:60px;box-shadow:var(--card-shadow);font-size:12px}
     .event{padding:6px;border-radius:8px;background:linear-gradient(90deg,var(--accent),#ffab91);color:white;font-size:12px;margin-top:6px}
-
-    /* Responsiveness */
     @media (max-width:1000px){.layout{grid-template-columns:1fr;}.rightbar{order:3}.sidebar{order:1;height:auto}.main{order:2}.modal .panel{width:94%;grid-template-columns:1fr}.video-grid{grid-template-columns:repeat(2,1fr)}}
   </style>
 </head>
 <body>
   <div class="app">
-    <div class="topbar">
-      <div class="brand">
-        <div class="logo">RH</div>
-        <div>
-          <h1>RemoteHub</h1>
-          <div style="font-size:13px;color:rgba(15,23,36,0.6)">Virtual hub for remote professionals</div>
-        </div>
-      </div>
-      <div class="actions">
-        <button class="btn secondary" id="demoBtn">See Demo</button>
-        <button class="btn" id="joinBtn">Join Free</button>
-      </div>
-    </div>
-
-    <div class="layout">
-      <aside class="sidebar">
-        <div class="profile">
-          <div class="avatar">VT</div>
-          <div>
-            <div style="font-weight:700">Vansh T.</div>
-            <div style="font-size:13px;color:rgba(15,23,36,0.6)">Online • Remote</div>
-          </div>
-        </div>
-        <nav class="nav">
-          <button class="active" data-view="home">Home</button>
-          <button data-view="communities">Communities</button>
-          <button data-view="events">Events</button>
-          <button data-view="cowork">Co-working</button>
-          <button data-view="messages">Messages</button>
-        </nav>
-        <button class="btn create-space" id="createSpace">+ Create Space</button>
-      </aside>
-
-      <main class="main">
-        <section class="welcome">
-          <div class="hero">
-            <div style="display:flex;justify-content:space-between;align-items:center">
-              <div>
-                <h2 style="margin:0">Welcome back, Vansh 👋</h2>
-                <div style="margin-top:6px;color:rgba(15,23,36,0.6)">Jump into a co-working session or catch a skill-share event today.</div>
-              </div>
-              <div style="text-align:right">
-                <div style="font-size:13px;color:rgba(15,23,36,0.6)">Next Event</div>
-                <div style="font-weight:700">Coffee Chat — 10:30 AM</div>
-              </div>
-            </div>
-            <div class="cards">
-              <div class="card">
-                <strong>Active Spaces</strong>
-                <ul style="margin-top:8px;padding-left:16px;color:rgba(15,23,36,0.7)">
-                  <li>#remote-tech (120)</li>
-                  <li>#freelance-writers (88)</li>
-                  <li>#design-studio (46)</li>
-                </ul>
-              </div>
-              <div class="card">
-                <strong>Upcoming Events</strong>
-                <div style="margin-top:8px;color:rgba(15,23,36,0.7)">Daily Coffee — 10:30 AM<br/>Pomodoro Co-work — 3:00 PM</div>
-              </div>
-            </div>
-
-            <div style="margin-top:12px">
-              <strong>Quick Actions</strong>
-              <div style="display:flex;gap:8px;margin-top:8px">
-                <button class="btn" id="openCowork">Start Co-work</button>
-                <button class="btn secondary" id="openCommunity">Open #remote-tech</button>
-                <button class="btn secondary" id="openCalendar">Open Events</button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="community" id="communityView" style="display:none">
-          <aside class="channels">
-            <div style="font-weight:700">#remote-tech</div>
-            <div style="margin-top:8px;color:rgba(15,23,36,0.6)">Channels</div>
-            <ul style="padding-left:10px;margin-top:8px">
-              <li>#general</li>
-              <li>#jobs</li>
-              <li>#show-and-tell</li>
-            </ul>
-            <div style="margin-top:12px;font-weight:700">Voice Rooms</div>
-            <ul style="padding-left:10px;margin-top:8px">
-              <li><button class="btn secondary" style="padding:6px 8px" id="joinRoom">Join Lounge</button></li>
-            </ul>
-          </aside>
-          <div class="chat">
-            <div style="display:flex;align-items:center;justify-content:space-between">
-              <div style="font-weight:700">#general</div>
-              <div style="font-size:13px;color:rgba(15,23,36,0.6)">120 members</div>
-            </div>
-            <div class="messages" id="messages">
-              <div class="msg them"><strong>Aisha:</strong> Morning! Anyone trying the new VS Code extension?</div>
-              <div class="msg me"><strong>You:</strong> I am — loving the live share feature.</div>
-            </div>
-            <div class="composer">
-              <input placeholder="Write a message..." id="msgInput">
-              <button class="btn" id="sendMsg">Send</button>
-            </div>
-          </div>
-        </section>
-
-        <section id="eventsView" style="display:none;margin-top:12px">
-          <div style="display:flex;gap:12px;align-items:flex-start">
-            <div style="flex:1;background:white;padding:12px;border-radius:12px;box-shadow:var(--card-shadow)">
-              <h3>Events Calendar</h3>
-              <div class="calendar" id="calendar">
-                <!-- Simple mock calendar cells -->
-              </div>
-            </div>
-            <div style="width:320px;background:white;padding:12px;border-radius:12px;box-shadow:var(--card-shadow)">
-              <h4>Details</h4>
-              <div id="eventDetails">Select an event</div>
-            </div>
-          </div>
-        </section>
-
-      </main>
-
-      <aside class="rightbar">
-        <div style="font-weight:700">Online Now</div>
-        <div class="online-list" style="margin-top:10px">
-          <div class="member"><div class="avatar" style="width:36px;height:36px;border-radius:8px">AA</div><div style="font-size:14px">Aisha <div style="font-size:12px;color:rgba(15,23,36,0.6)">Designer</div></div></div>
-          <div class="member"><div class="avatar" style="width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,#a2d2ff,#6ea8fe)">RM</div><div style="font-size:14px">Rahul <div style="font-size:12px;color:rgba(15,23,36,0.6)">Dev</div></div></div>
-        </div>
-
-        <div style="margin-top:14px">
-          <div style="font-weight:700">Suggested Spaces</div>
-          <div style="margin-top:8px"><div class="pill">#freelance-writers</div></div>
-        </div>
-
-        <div style="margin-top:14px">
-          <div style="font-weight:700">Integrations</div>
-          <div style="margin-top:8px;color:rgba(15,23,36,0.6)">Google Calendar • Notion • Slack</div>
-        </div>
-      </aside>
-    </div>
+    <!-- (Paste your main body content here from your prototype) -->
   </div>
 
   <!-- Modal (Co-work) -->
   <div id="coworkModal" style="display:none" class="modal">
-    <div class="panel">
-      <div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <div><strong>Pomodoro Co-work — Live</strong><div style="font-size:13px;color:rgba(15,23,36,0.6)">3 people • Focus session</div></div>
-          <div><button class="btn" id="leaveCowork">Leave</button></div>
-        </div>
-        <div class="video-grid">
-          <div class="cam">You</div>
-          <div class="cam">Aisha</div>
-          <div class="cam">Rahul</div>
-        </div>
-        <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
-          <div class="pomodoro">Time: <span id="pomTime">25:00</span></div>
-          <button class="btn" id="startPom">Start</button>
-        </div>
-      </div>
-      <aside style="padding:8px;background:#fff9f4;border-radius:10px">
-        <h4 style="margin-top:0">Co-work Chat</h4>
-        <div style="height:320px;overflow:auto;background:white;padding:8px;border-radius:8px;box-shadow:var(--card-shadow)" id="coworkChat">
-          <div style="font-size:13px;color:rgba(15,23,36,0.6)">Welcome to the focus room — say hi!</div>
-        </div>
-        <div style="display:flex;gap:8px;margin-top:8px">
-          <input id="coworkInput" placeholder="Quick note..." style="flex:1;padding:8px;border-radius:8px;border:1px solid rgba(15,23,36,0.06)">
-          <button class="btn" id="coworkSend">Send</button>
-        </div>
-      </aside>
-    </div>
+    <!-- Modal content here -->
   </div>
 
   <script>
@@ -311,8 +133,6 @@
 
     // Join voice room (mock)
     document.getElementById('joinRoom').addEventListener('click',()=>{alert('Joining "Lounge" — In full app this would open a voice room with mic/camera prompts.');});
-
   </script>
 </body>
 </html>
-
