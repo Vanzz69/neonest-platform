@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neonest Platform</title>
+    <title>RemoteHub</title>
     <style>
         /* Reset and basic styles */
         * {
@@ -80,8 +80,8 @@
             overflow: hidden;
         }
 
-        /* Sidebar */
-        aside {
+        /* Left Sidebar */
+        .left-sidebar {
             width: 250px;
             background-color: #fff;
             padding: 20px;
@@ -199,6 +199,8 @@
             padding: 10px;
             border-radius: 5px;
             margin-top: 10px;
+            max-height: 150px;
+            overflow-y: auto;
         }
 
         .message {
@@ -272,11 +274,13 @@
             flex-direction: column;
             padding: 20px;
             background-color: #fff;
+            overflow-y: auto;
         }
 
         .co-work-header {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             margin-bottom: 10px;
         }
 
@@ -294,6 +298,7 @@
             justify-content: center;
             align-items: center;
             margin-right: 10px;
+            font-weight: bold;
         }
 
         .timer {
@@ -308,6 +313,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            width: fit-content;
         }
 
         /* Co-work chat */
@@ -317,6 +323,10 @@
             padding: 10px;
             border-radius: 5px;
             overflow-y: auto;
+        }
+
+        .co-work-chat .chat-messages {
+            max-height: none;
         }
     </style>
 </head>
@@ -338,14 +348,14 @@
     </header>
 
     <div class="main-container">
-        <aside>
+        <aside class="left-sidebar">
             <div class="profile">
                 <div class="avatar">VT</div>
                 <div class="profile-info">
                     <h2>Vansh T.</h2>
                     <p>Online • Remote</p>
                 </div>
-            </aside>
+            </div>
             <nav>
                 <ul>
                     <li><a href="#">Home</a></li>
@@ -419,7 +429,7 @@
                     <div class="message">You: I am — loving the live share feature.</div>
                 </div>
                 <div class="chat-input">
-                    <input type="text" placeholder="Send a message" id="chat-message">
+                    <input type="text" placeholder="Send a message">
                     <button onclick="sendMessage()">Send</button>
                 </div>
             </section>
@@ -491,7 +501,7 @@
 
         // Chat message sending (simulated)
         function sendMessage() {
-            const input = document.getElementById('chat-message');
+            const input = document.querySelector('.chat .chat-input input');
             const message = input.value.trim();
             if (message) {
                 const chatMessages = document.querySelector('.chat .chat-messages');
