@@ -1,138 +1,542 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>RemoteHub — Virtual Hub for Remote Professionals (Prototype)</title>
-  <style>
-    :root{
-      --bg:#ffffff; --muted:#f5f7fb; --primary:#0ea5a0; --accent:#ff8a65; --text:#0f1724; --glass: rgba(255,255,255,0.7);
-      --card-shadow: 0 6px 18px rgba(16,24,40,0.08);
-      --radius:12px;
-      --max-width:1200px;
-      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;background:linear-gradient(180deg,#fbfdff 0%,#f7fbff 100%);color:var(--text);}
-    .app{max-width:var(--max-width);margin:28px auto;padding:20px;}
-    .topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));box-shadow:var(--card-shadow);}
-    .brand{display:flex;align-items:center;gap:12px}
-    .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--primary),#3db5b0);display:flex;align-items:center;justify-content:center;color:white;font-weight:700}
-    h1{margin:0;font-size:18px}
-    .actions{display:flex;gap:10px;align-items:center}
-    .btn{padding:8px 12px;border-radius:10px;border:0;cursor:pointer;background:var(--primary);color:white}
-    .btn.secondary{background:transparent;color:var(--text);border:1px solid rgba(15,23,36,0.06)}
-    .layout{display:grid;grid-template-columns:260px 1fr 320px;gap:18px;margin-top:18px}
-    .sidebar{background:var(--glass);padding:14px;border-radius:12px;box-shadow:var(--card-shadow);height:calc(100vh - 200px);overflow:auto}
-    .profile{display:flex;align-items:center;gap:12px}
-    .avatar{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#ffd28a,#ff8a65);display:flex;align-items:center;justify-content:center;font-weight:700}
-    .nav{margin-top:14px;display:flex;flex-direction:column;gap:8px}
-    .nav button{background:transparent;border:0;padding:10px;border-radius:10px;text-align:left;cursor:pointer}
-    .nav button.active{background:rgba(14,165,160,0.08)}
-    .create-space{margin-top:14px;display:block;width:100%}
-    .main{background:transparent}
-    .welcome{display:flex;justify-content:space-between;gap:12px}
-    .hero{flex:1;background:white;padding:16px;border-radius:12px;box-shadow:var(--card-shadow)}
-    .cards{display:flex;gap:12px;margin-top:12px}
-    .card{flex:1;padding:12px;border-radius:12px;background:white;box-shadow:var(--card-shadow)}
-    .community{display:grid;grid-template-columns:220px 1fr;gap:12px;margin-top:12px}
-    .channels{background:white;padding:12px;border-radius:12px;height:520px;overflow:auto}
-    .chat{background:white;padding:12px;border-radius:12px;height:520px;display:flex;flex-direction:column}
-    .messages{flex:1;overflow:auto;padding-right:6px}
-    .msg{padding:8px;border-radius:10px;margin-bottom:8px;max-width:80%}
-    .msg.me{background:linear-gradient(90deg,#e6fffb,#d1fbf7);align-self:flex-end}
-    .msg.them{background:#fbfbfb;border:1px solid rgba(15,23,36,0.04)}
-    .composer{display:flex;gap:8px;margin-top:8px}
-    .composer input{flex:1;padding:10px;border-radius:10px;border:1px solid rgba(15,23,36,0.06)}
-    .rightbar{background:var(--glass);padding:14px;border-radius:12px;box-shadow:var(--card-shadow);height:calc(100vh - 200px);overflow:auto}
-    .online-list{display:flex;flex-direction:column;gap:8px}
-    .member{display:flex;align-items:center;gap:8px}
-    .pill{padding:6px 10px;border-radius:999px;background:rgba(0,0,0,0.06);font-size:13px}
-    .modal{position:fixed;left:0;top:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:rgba(6,8,15,0.45);}
-    .modal .panel{width:900px;background:white;padding:16px;border-radius:12px;display:grid;grid-template-columns:1fr 320px;gap:12px}
-    .video-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-    .cam{background:linear-gradient(180deg,#f8fafc,#eef2ff);height:180px;border-radius:10px;display:flex;align-items:center;justify-content:center}
-    .pomodoro{background:#fff6ea;padding:10px;border-radius:10px}
-    .calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:8px}
-    .day{padding:8px;border-radius:8px;background:white;min-height:60px;box-shadow:var(--card-shadow);font-size:12px}
-    .event{padding:6px;border-radius:8px;background:linear-gradient(90deg,var(--accent),#ffab91);color:white;font-size:12px;margin-top:6px}
-    @media (max-width:1000px){.layout{grid-template-columns:1fr;}.rightbar{order:3}.sidebar{order:1;height:auto}.main{order:2}.modal .panel{width:94%;grid-template-columns:1fr}.video-grid{grid-template-columns:repeat(2,1fr)}}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neonest Platform</title>
+    <style>
+        /* Reset and basic styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background-color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo span {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            font-size: 18px;
+        }
+
+        .logo p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .create-space {
+            background-color: #007bff;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        /* Main layout */
+        .main-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        aside {
+            width: 250px;
+            background-color: #fff;
+            padding: 20px;
+            border-right: 1px solid #ddd;
+            overflow-y: auto;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .profile .avatar {
+            background-color: #ddd;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .profile-info h2 {
+            font-size: 16px;
+        }
+
+        .profile-info p {
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* Dashboard sections */
+        .dashboard {
+            margin-bottom: 20px;
+        }
+
+        .welcome {
+            margin-bottom: 10px;
+        }
+
+        .next-event {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .active-spaces, .upcoming-events {
+            margin-bottom: 10px;
+        }
+
+        .active-spaces ul, .upcoming-events ul {
+            list-style: none;
+        }
+
+        .active-spaces li, .upcoming-events li {
+            background-color: #e9ecef;
+            padding: 5px;
+            margin-bottom: 5px;
+            border-radius: 3px;
+        }
+
+        .quick-actions {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .quick-actions a {
+            background-color: #007bff;
+            color: white;
+            padding: 8px;
+            margin-bottom: 5px;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        /* Channel section */
+        .channel {
+            margin-bottom: 20px;
+        }
+
+        .channel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .channels-list, .voice-rooms {
+            margin-top: 10px;
+        }
+
+        .channels-list ul, .voice-rooms ul {
+            list-style: none;
+        }
+
+        .channels-list li, .voice-rooms li {
+            margin-bottom: 5px;
+        }
+
+        /* Chat section */
+        .chat {
+            margin-bottom: 20px;
+        }
+
+        .chat-header {
+            font-weight: bold;
+        }
+
+        .chat-messages {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .message {
+            margin-bottom: 10px;
+        }
+
+        .chat-input {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px 0 0 5px;
+        }
+
+        .chat-input button {
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+
+        /* Events calendar */
+        .events-calendar {
+            background-color: #fff;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* Right sidebar */
+        .right-sidebar {
+            width: 200px;
+            background-color: #fff;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+            overflow-y: auto;
+        }
+
+        .online-now, .suggested-spaces, .integrations {
+            margin-bottom: 20px;
+        }
+
+        .user-avatar {
+            background-color: #ddd;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .online-user {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        /* Co-work section */
+        .co-work {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            background-color: #fff;
+        }
+
+        .co-work-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .participants {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .participant {
+            background-color: #ddd;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+        }
+
+        .timer {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .start-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Co-work chat */
+        .co-work-chat {
+            flex: 1;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-y: auto;
+        }
+    </style>
 </head>
 <body>
-  <div class="app">
-    <!-- (Paste your main body content here from your prototype) -->
-  </div>
+    <header>
+        <div class="logo">
+            <span>RH</span>
+            <div>
+                <h1>RemoteHub</h1>
+                <p>Virtual hub for remote professionals</p>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">See Demo</a></li>
+                <li><a href="#">Join Free</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <!-- Modal (Co-work) -->
-  <div id="coworkModal" style="display:none" class="modal">
-    <!-- Modal content here -->
-  </div>
+    <div class="main-container">
+        <aside>
+            <div class="profile">
+                <div class="avatar">VT</div>
+                <div class="profile-info">
+                    <h2>Vansh T.</h2>
+                    <p>Online • Remote</p>
+                </div>
+            </aside>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Communities</a></li>
+                    <li><a href="#">Events</a></li>
+                    <li><a href="#">Co-working</a></li>
+                    <li><a href="#">Messages</a></li>
+                    <li><a class="create-space" href="#">+ Create Space</a></li>
+                </ul>
+            </nav>
 
-  <script>
-    // Basic view routing
-    document.querySelectorAll('.nav button').forEach(btn=>btn.addEventListener('click',()=>{
-      document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      const view = btn.dataset.view;
-      document.getElementById('communityView').style.display = (view==='communities')? 'grid':'none';
-      document.getElementById('eventsView').style.display = (view==='events')? 'block':'none';
-    }));
+            <section class="dashboard">
+                <div class="welcome">
+                    <h3>Welcome back, Vansh 👋</h3>
+                    <p>Jump into a co-working session or catch a skill-share event today.</p>
+                </div>
+                <div class="next-event">
+                    <h4>Next Event</h4>
+                    <p>Coffee Chat — 10:30 AM</p>
+                </div>
+                <div class="active-spaces">
+                    <h4>Active Spaces</h4>
+                    <ul>
+                        <li>#remote-tech (120)</li>
+                        <li>#freelance-writers (88)</li>
+                        <li>#design-studio (46)</li>
+                    </ul>
+                </div>
+                <div class="upcoming-events">
+                    <h4>Upcoming Events</h4>
+                    <ul>
+                        <li>Daily Coffee — 10:30 AM</li>
+                        <li>Pomodoro Co-work — 3:00 PM</li>
+                    </ul>
+                </div>
+                <div class="quick-actions">
+                    <h4>Quick Actions</h4>
+                    <a href="#">Start Co-work</a>
+                    <a href="#">Open #remote-tech</a>
+                    <a href="#">Open Events</a>
+                </div>
+            </section>
 
-    // Open community
-    document.getElementById('openCommunity').addEventListener('click',()=>{
-      document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
-      document.querySelector('[data-view="communities"]').classList.add('active');
-      document.getElementById('communityView').style.display='grid';
-      document.getElementById('eventsView').style.display='none';
-    });
+            <section class="channel">
+                <div class="channel-header">
+                    <h3>#remote-tech</h3>
+                </div>
+                <div class="channels-list">
+                    <h4>Channels</h4>
+                    <ul>
+                        <li>#general</li>
+                        <li>#jobs</li>
+                        <li>#show-and-tell</li>
+                    </ul>
+                </div>
+                <div class="voice-rooms">
+                    <h4>Voice Rooms</h4>
+                    <ul>
+                        <li>Join Lounge</li>
+                    </ul>
+                </div>
+            </section>
 
-    // Messages composer
-    document.getElementById('sendMsg').addEventListener('click',()=>{
-      const input = document.getElementById('msgInput');
-      const text = input.value.trim(); if(!text) return;
-      const div = document.createElement('div');div.className='msg me';div.innerHTML='<strong>You:</strong> '+text;document.getElementById('messages').appendChild(div);
-      input.value='';document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
-    });
+            <section class="chat">
+                <div class="chat-header">
+                    <h4>#general</h4>
+                    <p>120 members</p>
+                </div>
+                <div class="chat-messages">
+                    <div class="message">Aisha: Morning! Anyone trying the new VS Code extension?</div>
+                    <div class="message">You: I am — loving the live share feature.</div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" placeholder="Send a message" id="chat-message">
+                    <button onclick="sendMessage()">Send</button>
+                </div>
+            </section>
 
-    // Co-work modal
-    const coworkModal = document.getElementById('coworkModal');
-    document.getElementById('openCowork').addEventListener('click',()=>{coworkModal.style.display='flex';});
-    document.getElementById('leaveCowork').addEventListener('click',()=>{coworkModal.style.display='none';});
+            <section class="events-calendar">
+                <h3>Events Calendar</h3>
+                <!-- Placeholder for calendar -->
+                <div>Calendar View Here</div>
+                <h4>Details</h4>
+                <p>Select an event</p>
+            </section>
+        </aside>
 
-    // Cowork chat
-    document.getElementById('coworkSend').addEventListener('click',()=>{
-      const t = document.getElementById('coworkInput'); if(!t.value.trim()) return;
-      const p=document.createElement('div');p.style.marginBottom='6px';p.innerHTML='<strong>You:</strong> '+t.value;document.getElementById('coworkChat').appendChild(p);t.value='';
-    });
+        <main class="co-work">
+            <div class="co-work-header">
+                <h3>Pomodoro Co-work — Live</h3>
+                <p>3 people • Focus session</p>
+                <button>Leave</button>
+            </div>
+            <div class="participants">
+                <div class="participant">You</div>
+                <div class="participant">Aisha</div>
+                <div class="participant">Rahul</div>
+            </div>
+            <div class="timer" id="timer">Time: 25:00</div>
+            <button class="start-btn" onclick="startTimer()">Start</button>
 
-    // Pomodoro simple timer
-    let pomSeconds = 25*60;let pomInterval=null;
-    function formatTime(s){const m=Math.floor(s/60);const sec=s%60;return String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0')}
-    document.getElementById('pomTime').textContent=formatTime(pomSeconds);
-    document.getElementById('startPom').addEventListener('click',()=>{
-      if(pomInterval){clearInterval(pomInterval);pomInterval=null;document.getElementById('startPom').textContent='Start';return}
-      document.getElementById('startPom').textContent='Pause';pomInterval=setInterval(()=>{
-        if(pomSeconds<=0){clearInterval(pomInterval);pomInterval=null;alert('Session complete!');pomSeconds=25*60;document.getElementById('startPom').textContent='Start'}else{pomSeconds--;document.getElementById('pomTime').textContent=formatTime(pomSeconds)}
-      },1000);
-    });
+            <section class="co-work-chat">
+                <h4>Co-work Chat</h4>
+                <div class="chat-messages">
+                    <p>Welcome to the focus room — say hi!</p>
+                </div>
+                <div class="chat-input">
+                    <input type="text" placeholder="Send a message" id="co-work-message">
+                    <button onclick="sendCoWorkMessage()">Send</button>
+                </div>
+            </section>
+        </main>
 
-    // Minimal calendar population
-    const calendar = document.getElementById('calendar');
-    for(let i=1;i<=14;i++){const d=document.createElement('div');d.className='day';d.innerHTML='<strong>Sept '+(i+16)+'</strong>'; if(i===2||i===5){const ev=document.createElement('div');ev.className='event';ev.textContent=(i===2)?'Coffee Chat — 10:30':'Pomodoro Co-work — 15:00';d.appendChild(ev)}calendar.appendChild(d)}
+        <aside class="right-sidebar">
+            <section class="online-now">
+                <h4>Online Now</h4>
+                <div class="online-user">
+                    <div class="user-avatar">AA</div>
+                    <p>Aisha Designer</p>
+                </div>
+                <div class="online-user">
+                    <div class="user-avatar">RM</div>
+                    <p>Rahul Dev</p>
+                </div>
+            </section>
 
-    // Demo / Join buttons
-    document.getElementById('demoBtn').addEventListener('click',()=>{alert('Demo: This prototype shows the main flows — community chat, co-working modal, and events calendar.')});
-    document.getElementById('joinBtn').addEventListener('click',()=>{alert('Thanks! Sign-up flow would open here in a full product.')});
+            <section class="suggested-spaces">
+                <h4>Suggested Spaces</h4>
+                <ul>
+                    <li>#freelance-writers</li>
+                </ul>
+            </section>
 
-    // Create Space
-    document.getElementById('createSpace').addEventListener('click',()=>{
-      const name = prompt('Create space name (e.g. remote-design)'); if(!name) return; alert('Space "'+name+'" created (mock).');
-    });
+            <section class="integrations">
+                <h4>Integrations</h4>
+                <p>Google Calendar • Notion • Slack</p>
+            </section>
+        </aside>
+    </div>
 
-    // Join voice room (mock)
-    document.getElementById('joinRoom').addEventListener('click',()=>{alert('Joining "Lounge" — In full app this would open a voice room with mic/camera prompts.');});
-  </script>
+    <script>
+        // Basic JavaScript for interactivity
+
+        // Chat message sending (simulated)
+        function sendMessage() {
+            const input = document.getElementById('chat-message');
+            const message = input.value.trim();
+            if (message) {
+                const chatMessages = document.querySelector('.chat .chat-messages');
+                const newMessage = document.createElement('div');
+                newMessage.classList.add('message');
+                newMessage.textContent = `You: ${message}`;
+                chatMessages.appendChild(newMessage);
+                input.value = '';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        }
+
+        // Co-work chat message sending (simulated)
+        function sendCoWorkMessage() {
+            const input = document.getElementById('co-work-message');
+            const message = input.value.trim();
+            if (message) {
+                const chatMessages = document.querySelector('.co-work-chat .chat-messages');
+                const newMessage = document.createElement('p');
+                newMessage.textContent = `You: ${message}`;
+                chatMessages.appendChild(newMessage);
+                input.value = '';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        }
+
+        // Pomodoro timer (basic 25-minute countdown)
+        let timerInterval;
+        let timeLeft = 25 * 60; // 25 minutes in seconds
+
+        function startTimer() {
+            if (timerInterval) return; // Prevent multiple intervals
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('timer').textContent = `Time: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                    timeLeft = 25 * 60;
+                    alert('Pomodoro session complete!');
+                }
+            }, 1000);
+        }
+    </script>
 </body>
 </html>
